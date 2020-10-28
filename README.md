@@ -33,7 +33,7 @@ The logs are available on stdout/stderr (allowing to use `docker logs`).
 
 # Acknowledgements
 
-Based on [pierrecdn-phpipam-agent](https://hub.docker.com/r/pierrecdn/phpipam-agent).
+Based on [pierrecdn/phpipam-agent](https://github.com/pierrecdn/phpipam-agent), [published on docker hub](https://hub.docker.com/r/pierrecdn/phpipam-agent).
 
 
 ## docker-phpipam-agent
