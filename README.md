@@ -31,8 +31,9 @@ Now, the discovery scans will be performed every 1mn by default.
 
 The logs are available on stdout/stderr (allowing to use `docker logs`).
 
-Acknowledgements
-Based on [pierrecdn-phpipam-agent](https://hub.docker.com/r/pierrecdn/phpipam-agent) image, [published on docker hub](https://hub.docker.com/r/pierrecdn/phpipam-agent).
-Based on  image, published on docker hub.
+#Acknowledgements
 
-docker-phpipam-agent
+Based on [pierrecdn-phpipam-agent](https://hub.docker.com/r/pierrecdn/phpipam-agent) image, [published on docker hub](https://hub.docker.com/r/pierrecdn/phpipam-agent).
+
+
+## docker-phpipam-agent
