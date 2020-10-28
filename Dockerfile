@@ -17,13 +17,13 @@ RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
     docker-php-ext-install mysqli && \
     docker-php-ext-install json && \
     docker-php-ext-install pdo_mysql && \
-    
+    \
     if [ "$TARGETPLATFORM" = "linux/386" ] ; then XARCH="i386-linux-gnu" ; fi && \
     if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then XARCH="x86_64-linux-gnu" ; fi && \
     if [ "$TARGETPLATFORM" = "linux/arm/v6" ] ; then XARCH="arm-linux-gnueabi" ; fi && \
     if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then XARCH="arm-linux-gnueabihf" ; fi && \
     if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then XARCH="aarch64-linux-gnu" ; fi && \
-    
+    \
     ln -s /usr/include/$XARCH/gmp.h /usr/include/gmp.h && \
     docker-php-ext-configure gmp --with-gmp=/usr/include/$XARCH && \
     docker-php-ext-install gmp && \
