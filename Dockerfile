@@ -15,8 +15,7 @@ RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
     docker-php-ext-install mysqli && \
     docker-php-ext-install json && \
     docker-php-ext-install pdo_mysql && \
-    ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h && \
-    docker-php-ext-configure gmp --with-gmp=/usr/include/x86_64-linux-gnu && \
+    docker-php-ext-configure gmp  && \
     docker-php-ext-install gmp && \
     docker-php-ext-install pcntl
 
