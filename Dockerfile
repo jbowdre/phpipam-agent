@@ -1,33 +1,30 @@
-FROM php:5.6-apache
+FROM php:7.4.11-alpine3.11
 
 ARG TARGETPLATFORM
 RUN echo "TARGETPLATFORM : $TARGETPLATFORM"
 
 ENV PHPIPAM_AGENT_SOURCE https://github.com/phpipam/phpipam-agent
 
-# Install required deb packages
-RUN sed -i /etc/apt/sources.list -e 's/$/ non-free'/ && \
-    apt-get update && apt-get -y upgrade && \
-    rm /etc/apt/preferences.d/no-debian-php && \
-    apt-get install -y git cron libgmp-dev iputils-ping fping && \
-    rm -rf /var/lib/apt/lists/*
-
+run apk add --no-cache --virtual .build-dependencies git \
+    \
+    && apk add --no-cache \
+       apk-cron \
+       gmp \
+       gmp-dev \
+       gettext \
+       gettext-dev \
+       iputils \
+       fping \
+       bash \
+     \
 # Configure apache and required PHP modules
-RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
-    docker-php-ext-install mysqli && \
-    docker-php-ext-install json && \
-    docker-php-ext-install pdo_mysql && \
-    \
-    if [ "$TARGETPLATFORM" = "linux/386" ] ; then XARCH="i386-linux-gnu" ; fi && \
-    if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then XARCH="x86_64-linux-gnu" ; fi && \
-    if [ "$TARGETPLATFORM" = "linux/arm/v6" ] ; then XARCH="arm-linux-gnueabi" ; fi && \
-    if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then XARCH="arm-linux-gnueabihf" ; fi && \
-    if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then XARCH="aarch64-linux-gnu" ; fi && \
-    \
-    ln -s /usr/include/$XARCH/gmp.h /usr/include/gmp.h && \
-    docker-php-ext-configure gmp --with-gmp=/usr/include/$XARCH && \
-    docker-php-ext-install gmp && \
-    docker-php-ext-install pcntl
+    && docker-php-ext-configure mysqli --with-mysqli=mysqlnd \
+    && docker-php-ext-install mysqli \
+    && docker-php-ext-install json \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install gettext \
+    && docker-php-ext-install gmp \
+    && docker-php-ext-install pcntl
 
 COPY php.ini /usr/local/etc/php/
 
@@ -39,19 +36,21 @@ WORKDIR /opt/phpipam-agent
 # Use system environment variables into config.php
 RUN cp config.dist.php config.php && \
     sed -i -e "s/\['key'\] = .*;/\['key'\] = getenv(\"PHPIPAM_AGENT_KEY\");/" \
-    -e "s/\['pingpath'\] = .*;/\['pingpath'\] = \"\/usr\/bin\/fping\";/" \
-    -e "s/\['db'\]\['host'\] = \"localhost\"/\['db'\]\['host'\] = getenv(\"MYSQL_ENV_MYSQL_HOST\") ?: \"mysql\"/" \
-    -e "s/\['db'\]\['user'\] = \"phpipam\"/\['db'\]\['user'\] = getenv(\"MYSQL_ENV_MYSQL_USER\") ?: \"root\"/" \
+    -e "s/\['pingpath'\] = .*;/\['pingpath'\] = \"\/usr\/sbin\/fping\";/" \
+    -e "s/\['db'\]\['host'\] = \"localhost\"/\['db'\]\['host'\] = getenv(\"MYSQL_ENV_MYSQL_HOST\")/" \
+    -e "s/\['db'\]\['user'\] = \"phpipam\"/\['db'\]\['user'\] = getenv(\"MYSQL_ENV_MYSQL_USER\")/" \
     -e "s/\['db'\]\['pass'\] = \"phpipamadmin\"/\['db'\]\['pass'\] = getenv(\"MYSQL_ENV_MYSQL_PASSWORD\")/" \
     -e "s/\['db'\]\['name'\] = \"phpipam\"/\['db'\]\['name'\] = getenv(\"MYSQL_ENV_MYSQL_DATABASE\")/" \
-    -e "s/\['db'\]\['port'\] = \"3306\"/\['db'\]\['port'\] = getenv(\"MYSQL_ENV_MYSQL_PORT\")/" \
-    config.php
+    -e "s/\['db'\]\['port'\] = 3306/\['db'\]\['port'\] = getenv(\"MYSQL_ENV_MYSQL_PORT\")/" \
+    config.php \
+    \
+    && apk del --no-cache --purge .build-dependencies \
+    && rm -fr \
+        /tmp/*
 
 # Setup crontab
-ENV CRONTAB_FILE=/etc/cron.d/phpipam
-RUN echo "* * * * * /usr/local/bin/php /opt/phpipam-agent/index.php update > /proc/1/fd/1 2>/proc/1/fd/2" > ${CRONTAB_FILE} && \
-    chmod 0644 ${CRONTAB_FILE} && \
-    crontab ${CRONTAB_FILE}
+ENV CRONTAB_FILE=/var/spool/cron/crontabs/root
+RUN echo "* * * * * /usr/local/bin/php /opt/phpipam-agent/index.php update > /proc/self/fd/1 2>/proc/self/fd/2" > ${CRONTAB_FILE} && \
+    chmod 0644 ${CRONTAB_FILE}
 
-CMD [ "sh", "-c", "printenv > /etc/environment && cron -f" ]
-
+CMD [ "sh", "-c", "crond -l 2 -f" ]
