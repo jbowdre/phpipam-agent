@@ -1,4 +1,4 @@
-# docker-phpipam-agent
+# phpipam-agent
 
 phpIPAM is an open-source web IP address management application. Its goal is to provide light and simple IP address management application.
 
@@ -12,7 +12,6 @@ This container can be used as a discovery scan agent.
 
 ### Setup PHPIPAM
 
-* See steps in https://github.com/pierrecdn/phpipam
 * Configure a remote agent (Administration > scan agents), get the key.
 ![config_agent](https://user-images.githubusercontent.com/4225738/45190599-0b799000-b23f-11e8-9e41-fb993606264d.png)
 
@@ -21,10 +20,23 @@ This container can be used as a discovery scan agent.
 
 ### Run this container
 
-Pass the MySQL password and the phpipam agent key.
-
 ```bash
-$ docker run -ti -d -e PHPIPAM_AGENT_KEY=dummy-key -e MYSQL_ENV_MYSQL_PASSWORD=my-secret-pw --name ipam-agent --link phpipam-mysql:mysql pierrecdn/phpipam-agent
+version: '2'
+services:
+    phpipam-agent:
+        container_name: phpipam-agent
+        restart: unless-stopped
+        image: mc303/phpipam-agent:latest
+        environment:
+          - MYSQL_ENV_MYSQL_HOST=10.10.1.10
+          - MYSQL_ENV_MYSQL_DATABASE=phpipam
+          - MYSQL_ENV_MYSQL_USER=phpipam
+          - MYSQL_ENV_MYSQL_PASSWORD=phpipam
+          - MYSQL_ENV_MYSQL_PORT=3307
+          - PHPIPAM_AGENT_KEY=abcder1223456xczxcsad
+          - TZ=Europe/Amsterdam    
+        ports:
+          - "3306:3306"
 ```
 
 Now, the discovery scans will be performed every 1mn by default.
