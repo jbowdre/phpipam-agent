@@ -34,6 +34,7 @@ services:
           - MYSQL_ENV_MYSQL_PASSWORD=phpipam
           - MYSQL_ENV_MYSQL_PORT=3307
           - PHPIPAM_AGENT_KEY=abcder1223456xczxcsad
+          - CRON_SCHEDULE="*/15 * * * *"
           - TZ=Europe/Amsterdam    
         ports:
           - "3306:3306"
