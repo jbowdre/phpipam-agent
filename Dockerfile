@@ -28,6 +28,7 @@ run apk add --no-cache --virtual .build-dependencies git \
     && docker-php-ext-install pcntl
 
 COPY php.ini /usr/local/etc/php/
+COPY entrypoint.sh /
 
 # Clone phpipam-agent sources
 WORKDIR /opt/
@@ -45,13 +46,15 @@ RUN cp config.dist.php config.php && \
     -e "s/\['db'\]\['port'\] = 3306/\['db'\]\['port'\] = getenv(\"MYSQL_ENV_MYSQL_PORT\")/" \
     config.php \
     \
+    && chmod +x /entrypoint.sh \
+    \
     && apk del --no-cache --purge .build-dependencies \
     && rm -fr \
         /tmp/*
 
 # Setup crontab
 ENV CRONTAB_FILE=/var/spool/cron/crontabs/root
-RUN echo "* * * * * /usr/local/bin/php /opt/phpipam-agent/index.php update > /proc/self/fd/1 2>/proc/self/fd/2" > ${CRONTAB_FILE} && \
-    chmod 0644 ${CRONTAB_FILE}
 
-CMD [ "sh", "-c", "crond -l 2 -f" ]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD [ "crond -l 2 -f" ]
+
