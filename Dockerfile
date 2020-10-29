@@ -16,6 +16,7 @@ run apk add --no-cache --virtual .build-dependencies git \
        iputils \
        fping \
        bash \
+       tzdata \
      \
 # Configure apache and required PHP modules
     && docker-php-ext-configure mysqli --with-mysqli=mysqlnd \
