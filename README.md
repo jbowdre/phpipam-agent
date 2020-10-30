@@ -26,7 +26,7 @@ For scheduled scans you have to run script from cron. Add something like followi
 1/15 * * * * php /where/your/agent/index.php discover
 ```
 
-### Run this container
+## Run this container
 
 ```bash
 version: '2'
