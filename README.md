@@ -48,7 +48,7 @@ services:
           - "3306:3306"
 ```
 
-Now, the discovery scans will be performed every 1mn by default.
+Now, the update/discovery scans will be performed every X minute defined by CRON_SCHEDULE environment variable.
 
 The logs are available on stdout/stderr (allowing to use `docker logs`).
 
