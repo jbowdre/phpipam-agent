@@ -20,7 +20,7 @@ This container can be used as a discovery scan agent.
 
 ## Scheduled scans
 
-For scheduled scans you have to run script from cron. Add something like following to your cron to scan each 15 minutes:
+For scheduled scans these commands are added to the cron script.
 ```bash
 1/15 * * * * /usr/local/bin/php /opt/phpipam-agent/index.php update
 1/15 * * * * /usr/local/bin/php /opt/phpipam-agent/index.php discover
