@@ -56,5 +56,5 @@ RUN cp config.dist.php config.php && \
 ENV CRONTAB_FILE=/var/spool/cron/crontabs/root
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD [ "crond -l 2 -f" ]
+CMD [ "sh", "-c", "crond -l 2 -f" ]
 
