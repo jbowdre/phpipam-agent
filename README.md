@@ -18,6 +18,14 @@ This container can be used as a discovery scan agent.
 * For each subnet, enable scan & configure the remote agent by selecting a remote.
 ![config_subnet](https://user-images.githubusercontent.com/4225738/45190619-2ba94f00-b23f-11e8-9e45-b5e721c63d70.png)
 
+## Scheduled scans
+
+For scheduled scans you have to run script from cron. Add something like following to your cron to scan each 15 minutes:
+```bash
+1/15 * * * * php /where/your/agent/index.php update
+1/15 * * * * php /where/your/agent/index.php discover
+```
+
 ### Run this container
 
 ```bash
