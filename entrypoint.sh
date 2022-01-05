@@ -24,8 +24,8 @@ case "$SCAN_INTERVAL" in
   ;;
 esac
 
-echo "$CRON_S /usr/local/bin/php /opt/phpipam-agent/index.php update > /proc/self/fd/1 2>/proc/self/fd/2" > $CRONTAB_FILE
-echo "$CRON_S /usr/local/bin/php /opt/phpipam-agent/index.php discover > /proc/self/fd/1 2>/proc/self/fd/2" >> $CRONTAB_FILE
+echo "$CRON_S * * * /usr/local/bin/php /opt/phpipam-agent/index.php update > /proc/self/fd/1 2>/proc/self/fd/2" > $CRONTAB_FILE
+echo "$CRON_S * * * /usr/local/bin/php /opt/phpipam-agent/index.php discover > /proc/self/fd/1 2>/proc/self/fd/2" >> $CRONTAB_FILE
 chmod 0644 $CRONTAB_FILE
 
 exec "$@"
