@@ -20,7 +20,7 @@ case "$PHPIPAM_SCAN_INTERVAL" in
   ;;
   12h) CRON_S="0 */12"
   ;;
-  *)   CRON_S="0 *"
+  *)   CRON_S="*/15 *"
   ;;
 esac
 
