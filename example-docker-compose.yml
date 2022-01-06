@@ -5,11 +5,11 @@ services:
     restart: unless-stopped
     image: jbowdre/phpipam-agent:latest
     environment:
-      - MYSQL_ENV_MYSQL_HOST=ipamhost
-      - MYSQL_ENV_MYSQL_DATABASE=phpipam
-      - MYSQL_ENV_MYSQL_USER=phpipam
-      - MYSQL_ENV_MYSQL_PASSWORD=phpipamadmin
-      - MYSQL_ENV_MySQL_PORT=3306
+      - PHPIPAM_DB_HOST=ipamhost
+      - PHPIPAM_DB_NAME=phpipam
+      - PHPIPAM_DB_USER=phpipam
+      - PHPIPAM_DB_PASS=phpipamadmin
+      - PHPIPAM_DB_PORT=3306
       - PHPIPAM_AGENT_KEY=2RuQ0rt4Rir29vGN4_1ZOqShcUX7PSUb
-      - SCAN_INTERVAL=15m
+      - PHPIPAM_SCAN_INTERVAL=15m
       - TZ=UTC

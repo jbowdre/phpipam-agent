@@ -39,11 +39,11 @@ WORKDIR /opt/phpipam-agent
 RUN cp config.dist.php config.php && \
     sed -i -e "s/\['key'\] = .*;/\['key'\] = getenv(\"PHPIPAM_AGENT_KEY\");/" \
     -e "s/\['pingpath'\] = .*;/\['pingpath'\] = \"\/usr\/sbin\/fping\";/" \
-    -e "s/\['db'\]\['host'\] = \"localhost\"/\['db'\]\['host'\] = getenv(\"MYSQL_ENV_MYSQL_HOST\")/" \
-    -e "s/\['db'\]\['user'\] = \"phpipam\"/\['db'\]\['user'\] = getenv(\"MYSQL_ENV_MYSQL_USER\")/" \
-    -e "s/\['db'\]\['pass'\] = \"phpipamadmin\"/\['db'\]\['pass'\] = getenv(\"MYSQL_ENV_MYSQL_PASSWORD\")/" \
-    -e "s/\['db'\]\['name'\] = \"phpipam\"/\['db'\]\['name'\] = getenv(\"MYSQL_ENV_MYSQL_DATABASE\")/" \
-    -e "s/\['db'\]\['port'\] = 3306/\['db'\]\['port'\] = getenv(\"MYSQL_ENV_MYSQL_PORT\")/" \
+    -e "s/\['db'\]\['host'\] = \"localhost\"/\['db'\]\['host'\] = getenv(\"PHPIPAM_DB_HOST\")/" \
+    -e "s/\['db'\]\['user'\] = \"phpipam\"/\['db'\]\['user'\] = getenv(\"PHPIPAM_DB_USER\")/" \
+    -e "s/\['db'\]\['pass'\] = \"phpipamadmin\"/\['db'\]\['pass'\] = getenv(\"PHPIPAM_DB_PASS\")/" \
+    -e "s/\['db'\]\['name'\] = \"phpipam\"/\['db'\]\['name'\] = getenv(\"PHPIPAM_DB_NAME\")/" \
+    -e "s/\['db'\]\['port'\] = 3306/\['db'\]\['port'\] = getenv(\"PHPIPAM_DB_PORT\")/" \
     config.php \
     \
     && chmod +x /entrypoint.sh \

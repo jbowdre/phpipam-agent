@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-case "$SCAN_INTERVAL" in
+case "$PHPIPAM_SCAN_INTERVAL" in
   5m)  CRON_S="*/5 *"
   ;;
   10m) CRON_S="*/10 *"
