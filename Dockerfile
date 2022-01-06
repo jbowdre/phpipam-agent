@@ -39,6 +39,8 @@ WORKDIR /opt/phpipam-agent
 RUN cp config.dist.php config.php && \
     sed -i -e "s/\['key'\] = .*;/\['key'\] = getenv(\"PHPIPAM_AGENT_KEY\");/" \
     -e "s/\['pingpath'\] = .*;/\['pingpath'\] = \"\/usr\/sbin\/fping\";/" \
+    -e "s/\['reset_autodiscover_addresses'\] = false/\['reset_autodiscover_addresses'\] = getenv(\"PHPIPAM_RESET_AUTODISCOVER\")/" \
+    -e "s/\['remove_inactive_dhcp'\].*= false/\['remove_inactive_dhcp'\] = getenv(\"PHPIPAM_REMOVE_DHCP\")/" \
     -e "s/\['db'\]\['host'\] = \"localhost\"/\['db'\]\['host'\] = getenv(\"PHPIPAM_DB_HOST\")/" \
     -e "s/\['db'\]\['user'\] = \"phpipam\"/\['db'\]\['user'\] = getenv(\"PHPIPAM_DB_USER\")/" \
     -e "s/\['db'\]\['pass'\] = \"phpipamadmin\"/\['db'\]\['pass'\] = getenv(\"PHPIPAM_DB_PASS\")/" \
