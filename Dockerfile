@@ -5,6 +5,8 @@ RUN echo "TARGETPLATFORM : $TARGETPLATFORM"
 
 ENV PHPIPAM_AGENT_SOURCE https://github.com/phpipam/phpipam-agent
 
+RUN apk update && apk upgrade
+
 RUN apk add --no-cache --virtual .build-dependencies git \
     \
     && apk add --no-cache \
