@@ -72,5 +72,5 @@ The logs are available on stdout/stderr (allowing to use `docker logs`).
 
 ## Acknowledgements
 
-Based on [mc303/phpipam-agent](https://github.com/mc303/phpipam-agent) which is based on[pierrecdn/phpipam-agent](https://github.com/pierrecdn/phpipam-agent) and [published on docker hub](https://hub.docker.com/r/pierrecdn/phpipam-agent).
+Based on [mc303/phpipam-agent](https://github.com/mc303/phpipam-agent) which is based on [pierrecdn/phpipam-agent](https://github.com/pierrecdn/phpipam-agent) and [published on docker hub](https://hub.docker.com/r/pierrecdn/phpipam-agent).
 
