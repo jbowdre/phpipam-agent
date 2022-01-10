@@ -3,15 +3,15 @@ services:
   phpipam-agent:
     container_name: phpipam-agent
     restart: unless-stopped
-    image: jbowdre/phpipam-agent:latest
+    image: ghcr.io/jbowdre/phpipam-agent:latest
     environment:
-      - PHPIPAM_DB_HOST=ipamhost
-      - PHPIPAM_DB_NAME=phpipam
-      - PHPIPAM_DB_USER=phpipam
-      - PHPIPAM_DB_PASS=phpipamadmin
-      - PHPIPAM_DB_PORT=3306
-      - PHPIPAM_AGENT_KEY=2RuQ0rt4Rir29vGN4_1ZOqShcUX7PSUb
-      - PHPIPAM_SCAN_INTERVAL=15m
-      - PHPIPAM_RESET_AUTODISCOVER=false
-      - PHPIPAM_REMOVE_DHCP=false
+      - IPAM_DATABASE_HOST=ipamhost
+      - IPAM_DATABASE_NAME=phpipam
+      - IPAM_DATABASE_USER=phpipam
+      - IPAM_DATABASE_PASS=phpipamadmin
+      - IPAM_DATABASE_PORT=3306
+      - IPAM_AGENT_KEY=2RuQ0rt4Rir29vGN4_1ZOqShcUX7PSUb
+      - IPAM_SCAN_INTERVAL=15m
+      - IPAM_RESET_AUTODISCOVER=false
+      - IPAM_REMOVE_DHCP=false
       - TZ=UTC

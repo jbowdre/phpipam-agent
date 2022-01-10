@@ -39,15 +39,15 @@ RUN git clone ${PHPIPAM_AGENT_SOURCE}.git
 WORKDIR /opt/phpipam-agent
 # Use system environment variables into config.php
 RUN cp config.dist.php config.php && \
-    sed -i -e "s/\['key'\] = .*;/\['key'\] = getenv(\"PHPIPAM_AGENT_KEY\");/" \
+    sed -i -e "s/\['key'\] = .*;/\['key'\] = getenv(\"IPAM_AGENT_KEY\");/" \
     -e "s/\['pingpath'\] = .*;/\['pingpath'\] = \"\/usr\/sbin\/fping\";/" \
-    -e "s/\['reset_autodiscover_addresses'\] = false/\['reset_autodiscover_addresses'\] = getenv(\"PHPIPAM_RESET_AUTODISCOVER\") ?: false/" \
-    -e "s/\['remove_inactive_dhcp'\].*= false/\['remove_inactive_dhcp'\] = getenv(\"PHPIPAM_REMOVE_DHCP\") ?: false/" \
-    -e "s/\['db'\]\['host'\] = \"localhost\"/\['db'\]\['host'\] = getenv(\"PHPIPAM_DB_HOST\")/" \
-    -e "s/\['db'\]\['user'\] = \"phpipam\"/\['db'\]\['user'\] = getenv(\"PHPIPAM_DB_USER\") ?: \"phpipam\"/" \
-    -e "s/\['db'\]\['pass'\] = \"phpipamadmin\"/\['db'\]\['pass'\] = getenv(\"PHPIPAM_DB_PASS\")/" \
-    -e "s/\['db'\]\['name'\] = \"phpipam\"/\['db'\]\['name'\] = getenv(\"PHPIPAM_DB_NAME\") ?: \"phpipam\"/" \
-    -e "s/\['db'\]\['port'\] = 3306/\['db'\]\['port'\] = getenv(\"PHPIPAM_DB_PORT\") ?: 3306/" \
+    -e "s/\['reset_autodiscover_addresses'\] = false/\['reset_autodiscover_addresses'\] = getenv(\"IPAM_RESET_AUTODISCOVER\") ?: false/" \
+    -e "s/\['remove_inactive_dhcp'\].*= false/\['remove_inactive_dhcp'\] = getenv(\"IPAM_REMOVE_DHCP\") ?: false/" \
+    -e "s/\['db'\]\['host'\] = \"localhost\"/\['db'\]\['host'\] = getenv(\"IPAM_DATABASE_HOST\")/" \
+    -e "s/\['db'\]\['user'\] = \"phpipam\"/\['db'\]\['user'\] = getenv(\"IPAM_DATABASE_USER\") ?: \"phpipam\"/" \
+    -e "s/\['db'\]\['pass'\] = \"phpipamadmin\"/\['db'\]\['pass'\] = getenv(\"IPAM_DATABASE_PASS\")/" \
+    -e "s/\['db'\]\['name'\] = \"phpipam\"/\['db'\]\['name'\] = getenv(\"IPAM_DATABASE_NAME\") ?: \"phpipam\"/" \
+    -e "s/\['db'\]\['port'\] = 3306/\['db'\]\['port'\] = getenv(\"IPAM_DATABASE_PORT\") ?: 3306/" \
     config.php \
     \
     && chmod +x /entrypoint.sh \
