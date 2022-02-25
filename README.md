@@ -40,7 +40,7 @@ services:
     phpipam-agent:
         container_name: phpipam-agent
         restart: unless-stopped
-        image: jbowdre/phpipam-agent:latest
+        image: ghcr.io/jbowdre/phpipam-agent:latest
         environment:
           - IPAM_DATABASE_HOST=ipamhost.local
           - IPAM_DATABASE_NAME=phpipam
